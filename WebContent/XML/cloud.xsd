@@ -2,11 +2,9 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 		targetNamespace="http://www.cs.au.dk/dWebTek/2014"	
 		xmlns:w="http://www.cs.au.dk/dWebTek/2014"
-		xmlns:html="http://www.cs.au.dk/dWebTek/2014/html"
+		xmlns:html="http://www.cs.au.dk/dWebTek/2014"
 		elementFormDefault="qualified">
 	
-<import schemaLocation="html.xsd" 
-		namespace="http://www.cs.au.dk/dWebTek/2014/html"/>
 	
 	<!--  Command/query arguments --> 
 	<element name="sellItems" type="w:sellItems"/> 
@@ -188,7 +186,48 @@
 	<element name="itemDescription" type="w:itemDescription"/>
 	<complexType name="itemDescription">
 		<sequence>
-			<element ref="html:document"/>
+			<element ref="w:document"/>
+		</sequence>
+	</complexType>
+	
+	<element name="document" type="w:document"/>
+	<complexType name="document" mixed="true">
+		<sequence>
+			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="italics" type="w:italics"/>
+	<complexType name="italics" mixed="true">
+		<sequence>
+			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="bold" type="w:bold"/>
+	<complexType name="bold" mixed="true">
+		<sequence>
+			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="list" type="w:list"/>
+	<complexType name="list">
+		<choice minOccurs="0" maxOccurs="unbounded">
+			<element ref="w:item"/>
+		</choice>
+	</complexType>
+	
+	<element name="item" type="w:listItem"/>
+	<complexType name="listItem" mixed="true">
+		<sequence>
+			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
+			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
 
