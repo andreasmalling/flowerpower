@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modifyItem xmlns="http://www.cs.au.dk/dWebTek/2014"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="cloud.xsd">
+  <shopKey>a66hd77hhjajaj86s+21hhd</shopKey>
+  <itemID>275</itemID>
+  <itemName>Pope Hat</itemName>
+  <itemPrice>753</itemPrice>
+  <itemURL>http://www.truthdig.com/images/eartothegrounduploads/pope_350.jpg</itemURL>
+  <itemDescription>
+  	<document>
+  		Comfortable and practical <bold><italics>item,</italics> good for work and leisure.</bold>
+  		Previously owned.
+  	</document>
+  </itemDescription>
+</modifyItem>
+

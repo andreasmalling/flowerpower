@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.cs.au.dk/dWebTek/2014" 
+		xmlns:html="http://www.cs.au.dk/dWebTek/2014"
+		elementFormDefault="qualified">
+		
+		<element name="document" type="html:document"/>
+		<complexType name="document" mixed="true">
+			<sequence>
+				 <element ref="html:underline" minOccurs="0" maxOccurs="unbounded"/>
+				 <element ref="html:italics" minOccurs="0" maxOccurs="unbounded"/>
+				 <element ref="html:bold" minOccurs="0" maxOccurs="unbounded"/>
+				 <element ref="html:list" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+		
+		<element name="underline" type="html:document"/>
+		<element name="italics" type="html:document"/>
+		<element name="bold" type="html:document"/>
+		<element name="list" type="html:list"/>
+		<complexType name="list">
+			<sequence>
+				<element ref="html:item" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+		<element name="item" type="html:document"/>
+</schema>
