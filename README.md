@@ -1,4 +1,8 @@
 # AU: WebTek (Q3, 2014) #
+- [Project Handin 1](https://github.com/andreasmalling/flowerpower/blob/master/Project%20Handin%201.md)
+- [Project Handin 2](https://github.com/andreasmalling/flowerpower/blob/master/Project%20Handin%202.md)
+- [Project Handin 3](https://github.com/andreasmalling/flowerpower/blob/master/Project%20Handin%203.md)
+
 ## PROGRAMMING PROJECT ##
 The project consists of weekly handins that each form a part of a system. A perfect solution will yield the group 120 points (of which 20 points are extra credits for advanced work). The individual multiple choice exam yields up to 100 points and the individual final score is determined as a weighed average of the two scores. You will need the same set of skills for the project and for the multiple choice exam so participating in making the project also prepares you for the exam.
 
