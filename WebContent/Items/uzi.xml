@@ -1,0 +1,17 @@
+<item xmlns="http://www.cs.au.dk/dWebTek/2014">
+<shopKey>CB91051165CC463A0975655C</shopKey>
+<itemID>5</itemID>
+<itemName>UZI</itemName>
+<itemPrice>10</itemPrice>
+<itemURL>uzi-micro2.jpg</itemURL>
+<itemDescription>
+<document>
+<bold>Features:</bold>
+<list>
+<italics>Shoots bullets!</italics>
+<italics>Semi-automatic!</italics>
+<italics>Classic!</italics>
+</list>
+</document>
+</itemDescription>
+</item>

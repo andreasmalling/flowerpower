@@ -116,18 +116,19 @@
 		</sequence> 
 	</complexType> 
 	
-	<element name="item" type="w:item"/> 
-	<complexType name="item"> 
-		<all> 
-			<element ref="w:itemID"/> 
-			<element ref="w:itemName"/> 
-			<element ref="w:itemURL"/> 
-			<element ref="w:itemPrice"/> 
-			<element ref="w:itemStock"/> 
-			<element ref="w:itemDescription"/> 
-		</all> 
-	</complexType> 
-	
+	<element name="item">
+		<complexType> 
+			<all> 
+				<element ref="w:itemID"/> 
+				<element ref="w:itemName"/> 
+				<element ref="w:itemURL"/> 
+				<element ref="w:itemPrice"/> 
+				<element ref="w:itemStock"/> 
+				<element ref="w:itemDescription"/> 
+			</all> 
+		</complexType> 
+	</element>
+
 	<element name="shop" type="w:shop"/> 
 	<complexType name="shop"> 
 		<all> 
@@ -185,51 +186,48 @@
 	<element name="itemStock" type="nonNegativeInteger"/> 
 	<element name="itemDescription" type="w:itemDescription"/>
 	<complexType name="itemDescription">
-		<sequence>
+		<choice>
 			<element ref="w:document"/>
-		</sequence>
+		</choice>
 	</complexType>
 	
 	<element name="document" type="w:document"/>
 	<complexType name="document" mixed="true">
-		<sequence>
-			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
-		</sequence>
+		<choice  minOccurs="0" maxOccurs="unbounded">
+			 <element ref="w:italics"/>
+			 <element ref="w:bold"/>
+			 <element ref="w:list"/>
+		</choice>
 	</complexType>
 	
 	<element name="italics" type="w:italics"/>
 	<complexType name="italics" mixed="true">
-		<sequence>
-			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
-		</sequence>
+		<choice  minOccurs="0" maxOccurs="unbounded">
+			 <element ref="w:bold"/>
+		</choice>
 	</complexType>
 	
 	<element name="bold" type="w:bold"/>
 	<complexType name="bold" mixed="true">
-		<sequence>
-			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
-		</sequence>
+		<choice  minOccurs="0" maxOccurs="unbounded">
+			<element ref="w:italics"/>
+		</choice>
 	</complexType>
 	
 	<element name="list" type="w:list"/>
 	<complexType name="list">
-		<choice minOccurs="0" maxOccurs="unbounded">
-			<element ref="w:item"/>
+		<choice minOccurs="1" maxOccurs="unbounded">
+			<element name="item">
+				<complexType mixed="true">
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element ref="w:italics"/>
+						<element ref="w:bold"/>
+						<element ref="w:list"/>
+					</choice>
+				</complexType>
+			</element>
 		</choice>
-	</complexType>
-	
-	<element name="item" type="w:listItem"/>
-	<complexType name="listItem" mixed="true">
-		<sequence>
-			 <element ref="w:italics" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:bold" minOccurs="0" maxOccurs="unbounded"/>
-			 <element ref="w:list" minOccurs="0" maxOccurs="unbounded"/>
-		</sequence>
-	</complexType>
+	</complexType>	
 
 	<element name="shopKey" type="string"/> 
 	<element name="shopID" type="nonNegativeInteger"/> 

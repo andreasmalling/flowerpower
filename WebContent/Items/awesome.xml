@@ -1,0 +1,17 @@
+<item xmlns="http://www.cs.au.dk/dWebTek/2014">
+  <shopKey>CB91051165CC463A0975655C</shopKey>
+  <itemID>34</itemID>
+  <itemName>Stabbing Knuckle Pistol</itemName>
+  <itemPrice>23595</itemPrice>
+  <itemURL>awesome.jpg</itemURL>
+  <itemDescription><document>
+      This <italics>hand-made</italics> pistol is custom-made for our shop, and have become the trademark of our quality trading.
+      Several unique properties include:
+  <list>
+     <item>it can be used as a brass knuckle</item>
+     <item>it can be used as a knife</item>
+     <item>it can be used as a gun</item>
+     <item>it is looking <bold>BAD-ASS</bold>!!</item>
+  </list>
+  </document></itemDescription>
+</item>
