@@ -10,9 +10,7 @@ public class Communication {
     static final String KEY = "CB91051165CC463A0975655C";
     static final Path SCHEMA = "cloud.xsd";
 
-    public ArrayList<Item> getItems() {
-
-    }
+  
 
     /**
      *
@@ -52,6 +50,9 @@ Element modifyItem = new Element("modifyItem", w);
     	return shopItems;
     }
 
+    public String adjustItem(Item i) throws JDOMException, IOException{
+    
+    }
     @SuppressWarnings("deprecation")
     private bool validate(Document d) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
