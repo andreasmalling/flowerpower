@@ -31,7 +31,11 @@ public class Communication {
 
     }
 
-    private bool validate(Item i){
+    private bool validate(Document d){
+
+    }
+
+    private Document XML2Document(Item i){
         
     }
 }
