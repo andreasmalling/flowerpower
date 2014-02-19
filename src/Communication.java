@@ -7,7 +7,8 @@ import org.jdom2.input.SAXBuilder;
 
 public class Communication {
 
-    static final String key = "CB91051165CC463A0975655C";
+    static final String KEY = "CB91051165CC463A0975655C";
+    static final Path SCHEMA = "cloud.xsd";
 
     public ArrayList<Item> getItems() {
 
@@ -43,13 +44,12 @@ Element modifyItem = new Element("modifyItem", w);
         if (validator(createItemDoc)) {
             serverConnector(createItemDoc, createItem)
     
-        }
-        /**
-         *
-         * returns "OK" or "WRONG"
-         */
-    public String adjustItem(Item i) throws JDOMException, IOException{
-
+    public ArrayList<Item> getItems(){
+    	ArrayList<Item> shopItems = new ArrayList<Item>();
+    	
+    	
+    	
+    	return shopItems;
     }
 
     @SuppressWarnings("deprecation")
