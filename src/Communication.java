@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,7 +37,10 @@ public class Communication {
         modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL()));
         modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription()));
         
-        return "Ok";
+        if (validate(modifyItemDoc)) {
+        	postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", modifyItemDoc);
+        }
+        return "OK";
     }
 
     /**
@@ -52,6 +56,7 @@ public class Communication {
         if (validate(d)) {
             postHttpRequest("http://services.brics.dk/java4/cloud/createItem", d);
         }
+        return "OK";
     }
 
     public ArrayList<Item> getItems() {
@@ -61,7 +66,7 @@ public class Communication {
     }
 
     public String adjustItem(Item i) throws JDOMException, IOException {
-
+		return null;	// FIXME: Dummy-return
     }
 
     @SuppressWarnings("deprecation")
@@ -75,16 +80,15 @@ public class Communication {
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
                 SCHEMA);
 
-        builder.build(d);                
+        builder.build(d);
         return true;
     }
 
     private Document XML2Document(Item i) {
-
+    	return null;	// FIXME: Dummy-return
     }
 
-    public static String postHttpRequest(String requestURL, Document doc) throws MalformedURLException {
-
+    public static String postHttpRequest(String requestURL, Document doc) throws IOException {
         URL URL = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setDoOutput(true);
@@ -93,15 +97,18 @@ public class Communication {
         connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         outputter.output(doc, connection.getOutputStream());
+        
+        return null;	// FIXME: Dummy-return
+    }
 
-
-
-    public static Document getHttpRequest(String requestURL) throws MalformedURLException {
+    public static Document getHttpRequest(String requestURL) throws IOException {
         URL URL = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setDoOutput(true);
         connection.setDoInput(true);
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+        
+        return null;	// FIXME: Dummy-return
     }
 }
