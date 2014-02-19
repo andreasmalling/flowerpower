@@ -3,11 +3,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -27,12 +31,16 @@ public class Communication {
         Element modifyItem = new Element("modifyItem", w);
         Document modifyItemDoc = new Document(modifyItem);
         modifyItem.addContent(new Element("shopKey", w).setText(KEY));
-        modifyItem.addContent(new Element("itemID", w).setText(i.getItemID));
-        modifyItem.addContent(new Element("itemName", w).setText(i.getItemName));
-        modifyItem.addContent(new Element("itemPrice", w).setText(i.getItemPrice));
-        modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL));
-        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription));
-
+        modifyItem.addContent(new Element("itemID", w).setText(Integer.toString(i.getItemID())));
+        modifyItem.addContent(new Element("itemName", w).setText(i.getItemName()));
+        modifyItem.addContent(new Element("itemPrice", w).setText(Integer.toString(i.getItemPrice())));
+        modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL()));
+        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription()));
+        
+        if (validate(modifyItemDoc)) {
+        	postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", modifyItemDoc);
+        }
+        return "OK";
     }
 
     /**
@@ -43,11 +51,12 @@ public class Communication {
         Element createItem = new Element("createItem", w);
         Document d = new Document(createItem);
         createItem.addContent(new Element("shopKey", w).setText(KEY));
-        createItem.addContent(new Element("itemName", w).setText(i.getItemName());
+        createItem.addContent(new Element("itemName", w).setText(i.getItemName()));
 
-        if (validator(d)) {
+        if (validate(d)) {
             postHttpRequest("http://services.brics.dk/java4/cloud/createItem", d);
         }
+        return "OK";
     }
 
     public ArrayList<Item> getItems() {
@@ -57,11 +66,11 @@ public class Communication {
     }
 
     public String adjustItem(Item i) throws JDOMException, IOException {
-
+		return null;	// FIXME: Dummy-return
     }
 
     @SuppressWarnings("deprecation")
-    private bool validate(Document d) throws JDOMException, IOException {
+    private boolean validate(Document d) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         builder.setProperty(
@@ -71,17 +80,15 @@ public class Communication {
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
                 SCHEMA);
 
-        builder.build(Document d
-        );                
-   return true;
+        builder.build(d);
+        return true;
     }
 
     private Document XML2Document(Item i) {
-
+    	return null;	// FIXME: Dummy-return
     }
 
-    public static String postHttpRequest(String requestURL, Document doc) throws MalformedURLException {
-
+    public static String postHttpRequest(String requestURL, Document doc) throws IOException {
         URL URL = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setDoOutput(true);
@@ -90,15 +97,18 @@ public class Communication {
         connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         outputter.output(doc, connection.getOutputStream());
+        
+        return null;	// FIXME: Dummy-return
+    }
 
-
-
-    public static Document getHttpRequest(String requestURL) throws MalformedURLException {
+    public static Document getHttpRequest(String requestURL) throws IOException {
         URL URL = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
         connection.setDoOutput(true);
         connection.setDoInput(true);
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+        
+        return null;	// FIXME: Dummy-return
     }
 }
