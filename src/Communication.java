@@ -6,8 +6,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -27,12 +30,13 @@ public class Communication {
         Element modifyItem = new Element("modifyItem", w);
         Document modifyItemDoc = new Document(modifyItem);
         modifyItem.addContent(new Element("shopKey", w).setText(KEY));
-        modifyItem.addContent(new Element("itemID", w).setText(i.getItemID));
-        modifyItem.addContent(new Element("itemName", w).setText(i.getItemName));
-        modifyItem.addContent(new Element("itemPrice", w).setText(i.getItemPrice));
-        modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL));
-        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription));
-
+        modifyItem.addContent(new Element("itemID", w).setText(Integer.toString(i.getItemID())));
+        modifyItem.addContent(new Element("itemName", w).setText(i.getItemName()));
+        modifyItem.addContent(new Element("itemPrice", w).setText(Integer.toString(i.getItemPrice())));
+        modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL()));
+        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription()));
+        
+        return "Ok";
     }
 
     /**
@@ -43,9 +47,9 @@ public class Communication {
         Element createItem = new Element("createItem", w);
         Document d = new Document(createItem);
         createItem.addContent(new Element("shopKey", w).setText(KEY));
-        createItem.addContent(new Element("itemName", w).setText(i.getItemName());
+        createItem.addContent(new Element("itemName", w).setText(i.getItemName()));
 
-        if (validator(d)) {
+        if (validate(d)) {
             postHttpRequest("http://services.brics.dk/java4/cloud/createItem", d);
         }
     }
@@ -61,7 +65,7 @@ public class Communication {
     }
 
     @SuppressWarnings("deprecation")
-    private bool validate(Document d) throws JDOMException, IOException {
+    private boolean validate(Document d) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         builder.setProperty(
@@ -71,9 +75,8 @@ public class Communication {
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
                 SCHEMA);
 
-        builder.build(Document d
-        );                
-   return true;
+        builder.build(d);                
+        return true;
     }
 
     private Document XML2Document(Item i) {
