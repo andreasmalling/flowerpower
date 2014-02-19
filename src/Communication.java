@@ -1,30 +1,37 @@
 
+import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class Communication {
 
     static final String KEY = "CB91051165CC463A0975655C";
-    static final Path SCHEMA = "cloud.xsd";
-
-  
+    static final File SCHEMA = new File("cloud.xsd");
+    static final Namespace w = Namespace.getNamespace("http://www.cs.au.dk/dWebTek/2014");
 
     /**
      *
      * returns "OK" or "WRONG"
      */
-    public String modifyItem(Item i) throws JDOMException, IOException{
-Element modifyItem = new Element("modifyItem", w);
-            Document modifyItemDoc = new Document(modifyItem);
-            modifyItem.addContent(new Element("shopKey",w).setText(KEY));
-           modifyItem.addContent(new Element("itemID", w).setText(i.getItemID));
-           modifyItem.addContent(new Element("itemName", w).setText(i.getItemName));
-           modifyItem.addContent(new Element("itemPrice", w).setText(i.getItemPrice));
-           modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL));
-           modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription));
+    public String modifyItem(Item i) throws JDOMException, IOException {
+        Element modifyItem = new Element("modifyItem", w);
+        Document modifyItemDoc = new Document(modifyItem);
+        modifyItem.addContent(new Element("shopKey", w).setText(KEY));
+        modifyItem.addContent(new Element("itemID", w).setText(i.getItemID));
+        modifyItem.addContent(new Element("itemName", w).setText(i.getItemName));
+        modifyItem.addContent(new Element("itemPrice", w).setText(i.getItemPrice));
+        modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL));
+        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription));
 
     }
 
@@ -32,27 +39,27 @@ Element modifyItem = new Element("modifyItem", w);
      *
      * returns "OK" or "WRONG"
      */
-    public String createItem(Item i) throws JDOMException, IOException{
+    public String createItem(Item i) throws JDOMException, IOException {
         Element createItem = new Element("createItem", w);
-        Document createItemDoc = new Document(createItem);
+        Document d = new Document(createItem);
         createItem.addContent(new Element("shopKey", w).setText(KEY));
         createItem.addContent(new Element("itemName", w).setText(i.getItemName());
-        validator(createItemDoc);
-        //send status til ?
-        if (validator(createItemDoc)) {
-            serverConnector(createItemDoc, createItem)
-    
-    public ArrayList<Item> getItems(){
-    	ArrayList<Item> shopItems = new ArrayList<Item>();
-    	
-    	
-    	
-    	return shopItems;
+
+        if (validator(d)) {
+            postHttpRequest("http://services.brics.dk/java4/cloud/createItem", d);
+        }
     }
 
-    public String adjustItem(Item i) throws JDOMException, IOException{
-    
+    public ArrayList<Item> getItems() {
+        ArrayList<Item> shopItems = new ArrayList<Item>();
+
+        return shopItems;
     }
+
+    public String adjustItem(Item i) throws JDOMException, IOException {
+
+    }
+
     @SuppressWarnings("deprecation")
     private bool validate(Document d) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
@@ -62,13 +69,36 @@ Element modifyItem = new Element("modifyItem", w);
                 "http://www.w3.org/2001/XMLSchema");
         builder.setProperty(
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
-                SCHEMA.toFile());
+                SCHEMA);
 
-        builder.build(Document d);                
+        builder.build(Document d
+        );                
    return true;
     }
 
     private Document XML2Document(Item i) {
 
+    }
+
+    public static String postHttpRequest(String requestURL, Document doc) throws MalformedURLException {
+
+        URL URL = new URL(requestURL);
+        HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        outputter.output(doc, connection.getOutputStream());
+
+
+
+    public static Document getHttpRequest(String requestURL) throws MalformedURLException {
+        URL URL = new URL(requestURL);
+        HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
     }
 }
