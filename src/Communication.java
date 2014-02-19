@@ -1,10 +1,19 @@
+import java.io.File;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
 public class Communication {
 
-    static final String key = "CB91051165CC463A0975655C";
+    static final String KEY = "CB91051165CC463A0975655C";
+    static final Path SCHEMA = "cloud.xsd";
 
     
     public ArrayList<Item> getItems(){
-
+    	ArrayList<Item> shopItems = new ArrayList<Item>();
+    	
+    	
+    	
+    	return shopItems;
     }
 
     /**
