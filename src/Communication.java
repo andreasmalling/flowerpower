@@ -24,10 +24,6 @@ public class Communication {
     static final File SCHEMA = new File("cloud.xsd");
     static final Namespace w = Namespace.getNamespace("http://www.cs.au.dk/dWebTek/2014");
 
-    /**
-     *
-     * returns "OK" or "WRONG"
-     */
     public String modifyItem(Item i) throws JDOMException, IOException {
         Element modifyItem = new Element("modifyItem", w);
         Document modifyItemDoc = new Document(modifyItem);
@@ -44,10 +40,6 @@ public class Communication {
         return "OK";
     }
 
-    /**
-     *
-     * returns "OK" or "WRONG"
-     */
     public String createItem(Item i) throws JDOMException, IOException {
         Element createItem = new Element("createItem", w);
         Document d = new Document(createItem);
