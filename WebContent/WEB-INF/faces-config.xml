@@ -5,7 +5,20 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
     
-     <navigation-rule>
+    <navigation-rule>
+      <from-view-id>/modify_item.xhtml</from-view-id>
+      <navigation-case>
+        <from-outcome>WRONG</from-outcome>
+        <to-view-id>/modify_item.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>OK</from-outcome>
+        <to-view-id>/list_items.xhtml</to-view-id>
+        <redirect/>
+      </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
       <from-view-id>/loginPage.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>Wrong</from-outcome>

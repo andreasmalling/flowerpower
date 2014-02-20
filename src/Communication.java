@@ -1,4 +1,6 @@
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -67,7 +69,7 @@ public class Communication {
             String itemName = items.get(i).getChildText("itemName", w);
             int itemPrice = Integer.parseInt(items.get(i).getChildText("itemPrice", w));
             String itemURL = items.get(i).getChildText("itemURL", w);
-            String itemDescription = items.get(i).getChildText("itemDescription", w);
+            String itemDescription = new XMLOutputter().outputElementContentString(items.get(i).getChild("itemDescription", w));
             int itemStock = Integer.parseInt(items.get(i).getChildText("itemStock", w));
 
             item = new Item(itemID, itemName, itemPrice, itemURL, itemDescription, itemStock);
@@ -83,7 +85,7 @@ public class Communication {
         adjustItem.addContent(new Element("adjustment", w).setText(Integer.toString(i.getItemStock())));
         
         if (validate(adjustItem)) {
-        	postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", adjustItem);
+        	return postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", adjustItem);
         }
         return "OK";
     }
@@ -98,8 +100,10 @@ public class Communication {
         builder.setProperty(
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
                 SCHEMA);
-
-        builder.build( Document2XML(d) );
+         final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        new XMLOutputter().output(d, out);
+ 
+        builder.build(new ByteArrayInputStream(out.toByteArray()));
         return true;
     }
 
@@ -121,7 +125,12 @@ public class Communication {
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
         outputter.output(doc, connection.getOutputStream());
         
-        return null;	// FIXME: Dummy-return
+        if (connection.getResponseCode() != 200)
+        {
+        	 return "Server error! Message: " + connection.getResponseMessage();
+        }
+        
+        return "OK";	// FIXME: Dummy-return
     }
 
     public static Document getHttpRequest(String requestURL) throws IOException {
