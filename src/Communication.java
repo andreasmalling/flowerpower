@@ -53,7 +53,7 @@ public class Communication {
     }
 
     public ArrayList<Item> getItems() throws JDOMException, IOException {
-    	ArrayList itemObjectList = new ArrayList();
+    	ArrayList<Item> itemObjectList = new ArrayList<Item>();
     	Item item;
     	SAXBuilder saxybitch = new SAXBuilder();
         // Hvor awesome er det lige, at man kan give en SAXBuilder en url som argument?
@@ -99,14 +99,18 @@ public class Communication {
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
                 SCHEMA);
 
-        builder.build(d);
+        builder.build( Document2XML(d) );
         return true;
     }
 
     private Document XML2Document(Item i) {
     	return null;	// FIXME: Dummy-return
     }
-
+    
+    private String Document2XML(Document doc) {
+    	return new XMLOutputter().outputString(doc);
+    }
+    
     public static String postHttpRequest(String requestURL, Document doc) throws IOException {
         URL URL = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) URL.openConnection();
