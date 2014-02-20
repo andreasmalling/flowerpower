@@ -5,7 +5,16 @@ public class Item {
 	private String itemURL;
 	private String itemDescription;
 	private int itemStock;
-		
+	
+	public Item(int itemID, String itemName, int itemPrice, String itemURL, String itemDescription, int itemStock) {
+		this.itemID = itemID;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemURL = itemURL;
+		this.itemDescription = itemDescription;
+		this.itemStock = itemStock;
+	}
+	
 	public int getItemID() {
 		return itemID; }
 	public void setItemID(int itemID) {

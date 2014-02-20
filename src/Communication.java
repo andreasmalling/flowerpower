@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -59,14 +60,40 @@ public class Communication {
         return "OK";
     }
 
-    public ArrayList<Item> getItems() {
-        ArrayList<Item> shopItems = new ArrayList<Item>();
+    public ArrayList<Item> getItems() throws JDOMException, IOException {
+    	ArrayList itemObjectList = new ArrayList();
+    	Item item;
+    	SAXBuilder saxybitch = new SAXBuilder();
+        // Hvor awesome er det lige, at man kan give en SAXBuilder en url som argument?
+        Document d = saxybitch.build("http://services.brics.dk/java4/cloud/listItems?shopID=237");
+       // giver en liste med alle Item-børn til Items-forældren        
+        List<Element> items = d.getRootElement().getChildren();
+        // for every Item child of Items, an Item-object is created with the parameters associated with a given item. 
+        
+        for (int i = 0; i < items.size(); i++) {
+            int itemID = Integer.parseInt(items.get(i).getChildText("itemID", w));
+            String itemName = items.get(i).getChildText("itemName", w);
+            int itemPrice = Integer.parseInt(items.get(i).getChildText("itemPrice", w));
+            String itemURL = items.get(i).getChildText("itemURL", w);
+            String itemDescription = items.get(i).getChildText("itemDescription", w);
+            int itemStock = Integer.parseInt(items.get(i).getChildText("itemStock", w));
 
-        return shopItems;
+            item = new Item(itemID, itemName, itemPrice, itemURL, itemDescription, itemStock);
+            itemObjectList.add(item);  
+        }
+        return itemObjectList;
     }
 
     public String adjustItem(Item i) throws JDOMException, IOException {
-		return null;	// FIXME: Dummy-return
+    	Element adjustItemStock = new Element("adjustItemStock", w);
+        Document adjustItem = new Document(adjustItemStock);
+        adjustItem.addContent(new Element("shopKey", w).setText(KEY));
+        adjustItem.addContent(new Element("adjustment", w).setText(Integer.toString(i.getItemStock())));
+        
+        if (validate(adjustItem)) {
+        	postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", adjustItem);
+        }
+        return "OK";
     }
 
     @SuppressWarnings("deprecation")
