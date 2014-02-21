@@ -1,7 +1,12 @@
+import javax.faces.application.Application;
+import javax.faces.application.ApplicationFactory;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
-@ManagedBean(name="yoloBean")
+import com.sun.faces.application.ApplicationFactoryImpl;
+
+@ManagedBean(name="YoloBean")
 @SessionScoped
 
 public class YoloBean {
@@ -12,17 +17,21 @@ public class YoloBean {
 	private boolean isLoggedIn;
 	
 	public String LogIn() {
-		if(user.equals(username) && user.equals(password)){
+		if(user[0].equals(username) && user[1].equals(password)){
 			setLoggedIn(true);
-			return "Ok";
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLoggedIn", isLoggedIn);
+			System.out.println("Login Succes");
+			return "LOGGEDIN";
 		}
-		else return "Wrong"; 		
+		System.out.println("Login Failed"); 
+		return "WRONGLOGIN"; 		
 	}
 	
 	public String LogOut(){
 		setLoggedIn(false);
-			return "Ok";
-		}
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLoggedIn", null);
+		return "LOGGEDOUT";
+	}
 	
 	public void setUsername(String username){this.username = username;}
 	

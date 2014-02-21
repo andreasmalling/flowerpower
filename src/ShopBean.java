@@ -13,12 +13,12 @@ import org.jdom2.JDOMException;
 
 public class ShopBean {
 	private String message;
+	private String createItem;
 	private ArrayList<Item> items = null;
 	private Item item = null;
 
 	public ShopBean(){
 		updateItems();
-		// item = new Item(520, "a" ,1 ,"b", "c" ,1);
 	}
 	
 	public String modifyAction() {

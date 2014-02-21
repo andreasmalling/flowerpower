@@ -10,6 +10,7 @@ import javax.faces.context.*;
 
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 @FacesComponent("YoloComponent")
@@ -33,21 +34,13 @@ public class YoloComponent extends UIComponentBase {
 	public void encodeEnd(FacesContext context) throws IOException{
 
 		String value = (String) getAttributes().get("value");
-		System.out.print(value);
+		// System.out.print(value);
 		
 		try {
+			XMLOutputter out = new XMLOutputter(Format.getRawFormat().setOmitDeclaration(true));
 			Document old = new SAXBuilder().build(new ByteArrayInputStream(value.getBytes()));
 			Element newRoot = (Element)htmlify(old.getRootElement());
-			
-			List<Content> detached = new ArrayList<Content>();
-			for (Content c : newRoot.getChildren()) {
-				c.detach();
-				detached.add(c);
-			}
-			
-			
-			Document newDoc = new Document(detached); // possibly detach
-			XMLOutputter out = new XMLOutputter();
+			Document newDoc = new Document(newRoot); // possibly detach
 			out.output(newDoc, context.getResponseWriter());
 		} catch (JDOMException e) {
 			
@@ -56,16 +49,34 @@ public class YoloComponent extends UIComponentBase {
 	}
 
 	private Content htmlify(Content old) {
+		if( old instanceof Text){
+			return new Text(((Text)old).getText());
+		}
 		
+		Element work = (Element) old;
+		// System.out.println(work.getName());
+		Element htmlElement = null;
 		
+		if(work.getName().equals("italics") ){
+			htmlElement = new Element("i");
+			//htmlElement.setText("Sjov");
+		} else if (work.getName().equals("bold") ){
+			htmlElement = new Element("b");
+			//htmlElement.setText(work.getText());
+		} else if (work.getName().equals("list") ){
+			htmlElement = new Element("ul");
+			//htmlElement.setText(work.getText());
+		} else if (work.getName().equals("item") ){
+			htmlElement = new Element("li");
+			//htmlElement.setText(work.getText());
+		}else if (work.getName().equals("document") ){
+			htmlElement = new Element("div");
+		}
 		
-		Element test = new Element("b");
-		test.setText("Bold text");
-		
-		Element doc = new Element("document");
-		doc.addContent(test);
-		
-		return doc;
+		for (Content e : work.getContent()){
+			htmlElement.addContent(htmlify(e));
+		}
+		return htmlElement;
 	}
 }
 

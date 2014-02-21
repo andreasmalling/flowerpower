@@ -5,6 +5,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@javax.servlet.annotation.WebFilter("/admin/*")
 public class WebFilter implements Filter {
 	protected FilterConfig config;
 
@@ -15,14 +16,17 @@ public class WebFilter implements Filter {
 	}
 	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
+	public void doFilter(ServletRequest req, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		
 		// The filter checks whether the owner ID and password is entered or not. If it is and it is valid, the owner will get access to the admin page, if not, the request will be denied and the owner will return back to the login page.
 	
-		YoloBean yoloBean = (YoloBean)((HttpServletRequest)request).getSession().getAttributeNames();
-		if(yoloBean == null){
-		String ourPath = ((HttpServletRequest)request).getServletPath();
-		((HttpServletResponse)response).sendRedirect(ourPath + "loginPage.xhtml");
+		 
+		if(request.getSession().getAttribute("isLoggedIn") == null){
+			String ourPath = ((HttpServletRequest)request).getServletPath();
+			((HttpServletResponse)response).sendRedirect("/flowerpower/login.jsf");
+			return;
 		}
 		chain.doFilter(request, response);
 	}

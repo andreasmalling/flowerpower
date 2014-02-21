@@ -49,6 +49,19 @@ public class ModifyBean {
 		return "OK";
 	}
 	
+	public String create(){
+		try {
+			new Communication().createItem(item);
+			shopBean.updateItems();
+			System.out.println("OK CREATE");
+		} catch (Exception e) {
+			message = e.getMessage();
+			System.out.println("WRONG CREATE");
+			return "WRONG";
+		}
+		return "OK";
+	}
+	
 	public String getItemID(){
 		return itemID;
 	}

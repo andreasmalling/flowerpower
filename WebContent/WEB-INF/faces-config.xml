@@ -6,36 +6,37 @@
     version="2.2">
     
     <navigation-rule>
-      <from-view-id>/modify_item.xhtml</from-view-id>
-      <navigation-case>
-        <from-outcome>WRONG</from-outcome>
-        <to-view-id>/modify_item.xhtml</to-view-id>
-      </navigation-case>
+      <from-view-id>/admin/modify_item.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>OK</from-outcome>
-        <to-view-id>/list_items.xhtml</to-view-id>
+        <to-view-id>/admin/list_items.xhtml</to-view-id>
         <redirect/>
       </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
-      <from-view-id>/loginPage.xhtml</from-view-id>
+      <from-view-id>/login.xhtml</from-view-id>
       <navigation-case>
-        <from-outcome>Wrong</from-outcome>
-        <to-view-id>/loginPage.xhtml</to-view-id>
+        <from-outcome>WRONGLOGIN</from-outcome>
+        <to-view-id>/login.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
-        <from-outcome>Ok</from-outcome>
-        <to-view-id>/list_items.xhtml</to-view-id>
+        <from-outcome>LOGGEDIN</from-outcome>
+        <to-view-id>/admin/list_items.xhtml</to-view-id>
         <redirect/>
       </navigation-case>
-    </navigation-rule>
+    </navigation-rule>    
     
     <navigation-rule>
-      <from-view-id>/list_items.xhtml</from-view-id>
+      <from-view-id>/admin/list_items.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>MODIFY</from-outcome>
-        <to-view-id>/modify_item.xhtml</to-view-id>
+        <to-view-id>/admin/modify_item.xhtml</to-view-id>
+        <redirect />
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>LOGGEDOUT</from-outcome>
+        <to-view-id>/login.xhtml</to-view-id>
         <redirect />
       </navigation-case>
     </navigation-rule>
