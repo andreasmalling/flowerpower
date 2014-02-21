@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="template.xhtml">
+  <ui:define name="content">
+    <f:metadata><f:viewParam name="id" value="#{ModifyBean.itemID}" /> </f:metadata>
+    
+    <h1>
+      Modify Item
+    </h1>
+    <h:form>
+    ID: 
+    <h:outputText
+    	label="item id"
+    	value="#{ModifyBean.item.itemID}"/>
+ 	Name:
+ 	<h:inputText
+ 		label="item name"
+ 		value="#{ModifyBean.item.itemName}"/>
+ 	URL:
+ 	<h:inputText 
+ 		label="item url" 
+ 		value="#{ModifyBean.item.itemURL}"/>
+ 	Price: 
+ 	<h:inputText 
+ 		label="item price" 
+ 		value="#{ModifyBean.item.itemPrice}"/>
+ 	<br />
+	Description: 
+	<h:inputTextarea 
+		label="item description"
+		cols="90" rows="7"
+		value="#{ModifyBean.item.itemDescription}"/>
+ 	<br />
+ 	<h:commandButton value="Modify" action="#{ModifyBean.modify}"/>
+    </h:form>
+    
+    <h:outputText
+    	label="item id"
+    	value="#{ShopBean.message}"/>
+    	
+  </ui:define>
+</ui:composition>
