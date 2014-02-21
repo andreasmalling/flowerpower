@@ -1,0 +1,10 @@
+<facelet-taglib version="2.0" 
+ xmlns="http://java.sun.com/xml/ns/javaee"> 
+ <namespace>http://cs.au.dk/dwebtek/</namespace> 
+ <tag> 
+ <tag-name>customXHTML</tag-name> 
+ <component> 
+ <component-type>YoloComponent</component-type> 
+ </component> 
+ </tag> 
+</facelet-taglib>
