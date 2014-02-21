@@ -1,0 +1,9 @@
+Mangler og mulige løsninger
+
+modifyItem i Communications.java virker ikke - itemDescription blev initielt vist forkert ved at tag ved at tags blev "fejloversat" til &lt og &gt i output Document. Brugen af Saxbuilder.build skulle løse problemet. Dog skal der bruges ByteArrayInputStream til at parse itemDescription, da builder ellers ville klage over at input er XML.
+
+createItem virker ikke, da vi ikke kunne få overført input på sitet fra formen til metodekaldet i Communication.java. createItem har virket fint tidligere, så det er næppe der problemet ligger.
+
+Vi bruger en absolut URL til at pege på cloud.xsd, der er som sådan ikke noget i vejen med det, validate() virker fint, men vi ville gerne have brugt en relativ sti i stedet.
+ 
+
