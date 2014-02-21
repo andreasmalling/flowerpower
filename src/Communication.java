@@ -23,7 +23,7 @@ import org.jdom2.output.XMLOutputter;
 public class Communication {
 
     static final String KEY = "CB91051165CC463A0975655C";
-    static final File SCHEMA = new File("cloud.xsd");
+    //static final File SCHEMA = new File("cloud.xsd");
     static final Namespace w = Namespace.getNamespace("http://www.cs.au.dk/dWebTek/2014");
 
     public String modifyItem(Item i) throws JDOMException, IOException {
@@ -34,7 +34,10 @@ public class Communication {
         modifyItem.addContent(new Element("itemName", w).setText(i.getItemName()));
         modifyItem.addContent(new Element("itemPrice", w).setText(Integer.toString(i.getItemPrice())));
         modifyItem.addContent(new Element("itemURL", w).setText(i.getItemURL()));
-        modifyItem.addContent(new Element("itemDescription", w).setText(i.getItemDescription()));
+        
+        Element itemD = new SAXBuilder().build(new ByteArrayInputStream(i.getItemDescription().getBytes())).getRootElement(); //Detach?
+        modifyItem.addContent(new Element("itemDescription", w).addContent(itemD) );//.setText(i.getItemDescription()));      
+        new XMLOutputter().output(modifyItemDoc,System.out);	//FIXME
         
         if (validate(modifyItemDoc)) {
         	postHttpRequest("http://services.brics.dk/java4/cloud/modifyItem", modifyItemDoc);
@@ -99,7 +102,7 @@ public class Communication {
                 "http://www.w3.org/2001/XMLSchema");
         builder.setProperty(
                 "http://java.sun.com/xml/jaxp/properties/schemaSource",
-                SCHEMA);
+                "http://users-cs.au.dk/amao/test/cloud.xsd");
          final ByteArrayOutputStream out = new ByteArrayOutputStream();
         new XMLOutputter().output(d, out);
  

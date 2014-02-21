@@ -30,5 +30,14 @@
         <redirect/>
       </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>/list_items.xhtml</from-view-id>
+      <navigation-case>
+        <from-outcome>MODIFY</from-outcome>
+        <to-view-id>/modify_item.xhtml</to-view-id>
+        <redirect />
+      </navigation-case>
+    </navigation-rule>
 
 </faces-config>
